@@ -54,7 +54,7 @@ export default function Home() {
           </Link>
         </Col>
         <Col xs={12} md={6} className='px-2'>
-        <Link to='/in' className="card mb-3 rounded-3 shadow-lg" style={{textDecoration: 'none'}}>
+        <Link to='/setting' className="card mb-3 rounded-3 shadow-lg" style={{textDecoration: 'none'}}>
           <div className='card bg-base-100 border border-base-300 hover:border-3'>
             <div className='card-body'>
               <div className='text-3xl font-bold flex justify-center'>

@@ -47,7 +47,7 @@ export default function ModalAddIn({setReload}: Props) {
 
   return (
     <>
-      <BottomButton color='primary' onClick={onShow}>
+      <BottomButton color='primary' style='soft' onClick={onShow}>
         <IoMdAdd className='text-xl'/>
       </BottomButton>
       <Modal isShow={isShow} onHide={onHide} backdrop={false} closeButton>
@@ -72,7 +72,7 @@ export default function ModalAddIn({setReload}: Props) {
                   {...register('number', {required: '請填寫此欄位', maxLength: {value: 16, message: '上限16個字'}})}
                 />
               </FormInputCol>
-              <FormInputCol xs={6} label='主旨' error={errors.title?.message}>
+              <FormInputCol xs={12} label='主旨' error={errors.title?.message}>
                 <input
                   className='input input-sm w-full'
                   type='text'

@@ -1,13 +1,13 @@
 import {Button, DetailRow, Col} from "@/component";
 import toast from "react-hot-toast";
-import type {DocOutDetail} from "@/types/doc-types.ts";
+import type {DocInDetail} from "@/types/doc-types.ts";
 import {MdMoreVert} from "react-icons/md";
 
 type Props = {
-  readonly doc: DocOutDetail
+  readonly doc: DocInDetail
 }
 
-export default function ModalOutDetail({doc}: Props) {
+export default function ModalInDetail({doc}: Props) {
 
   const onShow = () => {
     toast(t => (
@@ -16,21 +16,21 @@ export default function ModalOutDetail({doc}: Props) {
           start='送文號'
           center={doc.number}
         />
-        <DetailRow
-          start='承辦人'
-          center={doc.username}
-        />
         <DetailRow start='組別'
                    center={doc.groupName}
         />
         <DetailRow start='主旨'
                    center={doc.title}
         />
-        <DetailRow start='陳報日期'
-                   center={doc.reportDate}
+        <DetailRow
+          start='承辦人'
+          center={doc.username}
         />
-        <DetailRow start='送文日期'
-                   center={doc.sendDate}
+        <DetailRow start='收文日期'
+                   center={doc.receiveDate}
+        />
+        <DetailRow start='批閱日期'
+                   center={doc.readDate}
         />
         <DetailRow start='狀態'
                    center={doc.status_display}

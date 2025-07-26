@@ -10,16 +10,16 @@ export default function UserCard({user, header = <></>}: Props) {
 
   return (
     <div className='card bg-base-100 border border-base-300'>
-      <div className='card-title'>
-        <span className='fs-4 fw-bold text-primary my-auto'>{user.area}</span>
-        <span className='ms-2 me-4 my-auto'>勤區</span>
-        <span className='fs-5 fw-bold text-primary my-auto'> {user.name}</span>
-        {header}
-      </div>
-      <div className='card-body'>
-        <div style={{ whiteSpace: 'pre-line' }}>
-          {user.workContent}
+      <div className='card-title flex mt-2 mx-4'>
+        <span className='text-2xl font-bold text-primary'>{user.area}</span>
+        <span className='text-sm'>勤區</span>
+        <span className='text-xl text-primary'> {user.name}</span>
+        <div className='ml-auto mr-2'>
+          {header}
         </div>
+      </div>
+      <div className='card-body text-sm whitespace-pre-line'>
+        {user.workContent}
       </div>
     </div>
   )

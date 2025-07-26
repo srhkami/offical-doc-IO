@@ -48,6 +48,19 @@ export default function ModalAssign({id, userData, setReload, username}: Props) 
       .finally(() => onHide())
   }
 
+  const onRemove = () => {
+    showToast(
+      api({
+        method: 'DELETE',
+        url: ROOT_IP + '/doc/in/' + id + '/',
+      }),
+      {success: '刪除成功',}
+    )
+      .then(() => setReload(prev => !prev))
+      .catch(err => console.log(err))
+      .finally(() => onHide())
+  }
+
   const cardList = userData.map(user => {
     return (
       <li key={user.id} className='my-1'>
@@ -83,6 +96,11 @@ export default function ModalAssign({id, userData, setReload, username}: Props) 
         <ModalBody>
           <ul className='list'>
             {cardList}
+            <li className='mt-2'>
+              <Button color='error' style='outline' shape='block' size='sm' onClick={onRemove}>
+                刪除此筆
+              </Button>
+            </li>
           </ul>
         </ModalBody>
       </Modal>

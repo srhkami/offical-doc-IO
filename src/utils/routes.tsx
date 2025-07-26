@@ -1,5 +1,5 @@
 import {createBrowserRouter} from "react-router";
-import {Home, OutHistory, OutManage, OutPrint} from "@/features";
+import {Home, InHistory, InManage, InPrint, OutHistory, OutManage, OutPrint, Setting} from "@/features";
 import {Base} from "@/layout";
 
 const routes = createBrowserRouter([
@@ -32,8 +32,35 @@ const routes = createBrowserRouter([
           }
         ]
       },
+      {
+        path: 'in',
+        children: [
+          {
+            path: '',
+            element: <InManage/>
+          },
+          {
+            path: 'history',
+            children: [
+              {path: ':page', element: <InHistory/>}
+            ]
+          },
+          {
+            path: 'print',
+            children: [
+              {path: ':date', element: <InPrint/>}
+            ]
+          }
+        ]
+      },
+      {
+        path: 'setting',
+        element: <Setting/>
+      }
     ]
   },
+
+
   // {
   //   path: '/out',
   //   element: <Base/>,

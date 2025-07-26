@@ -2,6 +2,8 @@ import Nav from "./Nav.tsx";
 import {Outlet, useLocation} from "react-router";
 import {Toaster} from "react-hot-toast";
 import {type ReactNode, useEffect} from "react";
+import {AuthComponent} from "@/auth";
+import {ErrorAlert} from "@/layout/index.ts";
 
 type Prop = {
   readonly children?: ReactNode,
@@ -22,7 +24,9 @@ export default function Base({children}: Prop) {
     <div className='lg:px-10 xl:px-20 2xl:px-30 min-h-[100vh]'>
       <Nav/>
       <main className='px-2 sm:px-3 md:px-6 xl:px-10 py-3 min-h-100'>
-        <Outlet/>
+        <AuthComponent authType='CM' errorContent={<ErrorAlert errorType='noLogin'/>}>
+          <Outlet/>
+        </AuthComponent>
         {children}
       </main>
       <Toaster position='top-center'/>

@@ -1,30 +1,13 @@
-import {useEffect, useState} from "react";
-import {useAxios} from "@/hooks";
+import {useCacheApi} from "@/hooks";
 import type {GroupDetail} from "@/types/doc-types.ts";
 import {ROOT_IP} from "@/utils/info.ts";
+import type {ApiResData} from "@/types/api-types.ts";
 
 export default function OptionsGroup() {
 
-  const api = useAxios()
-  const [data, setData] = useState<Array<GroupDetail>>([]);
+  const {data} = useCacheApi<ApiResData<Array<GroupDetail>>>(ROOT_IP + '/doc/groups/')
 
-  useEffect(() => {
-    api({
-      method: 'GET',
-      url: ROOT_IP + '/doc/groups/',
-      params: {
-        ordering: 'id',
-      },
-    })
-      .then(res => {
-        setData(res.data.results);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }, []);
-
-  const dataList = data.map(obj => {
+  const dataList = data?.results.map(obj => {
     return (
       <option key={obj.id} value={obj.name}>{obj.name}</option>
     )
