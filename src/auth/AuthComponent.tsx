@@ -1,7 +1,7 @@
-import { ReactNode, useContext } from "react";
+import { type ReactNode, useContext } from "react";
 import AuthContext from "./AuthContext.tsx";
 import { handleHasAuth } from "./handleHasAuth.ts";
-import {AuthType} from "@/types/auth-types.ts";
+import {type AuthType} from "@/types/auth-types.ts";
 
 type AppProps = {
   readonly authType?: AuthType,  // 權限類別

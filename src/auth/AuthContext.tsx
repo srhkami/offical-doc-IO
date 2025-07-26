@@ -1,11 +1,11 @@
-import React, {ReactNode, useState, createContext, useEffect} from "react";
+import React, {type ReactNode, useState, createContext, useEffect} from "react";
 import axios from 'axios'
-import {USER_API} from "@/utils/info.ts";
 import toast from "react-hot-toast";
 import {Link} from "react-router";
-import {Button} from "../component";
-import {UserInfo} from "@/types/user-types.ts";
-import {TypeAuthContext} from "@/types/auth-types.ts";
+import {Button} from "@/component";
+import {type UserInfo} from "@/types/user-types.ts";
+import {type TypeAuthContext} from "@/types/auth-types.ts";
+import {USER_API} from "@/utils/info.ts";
 
 type Props = {
   children: ReactNode,

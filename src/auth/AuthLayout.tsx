@@ -1,8 +1,8 @@
-import {ReactNode, useContext} from "react";
+import {type ReactNode, useContext} from "react";
 import AuthContext from "./AuthContext.tsx";
 import {handleHasAuth} from "./handleHasAuth.ts";
 import {ErrorAlert} from "@/layout";
-import {AuthType} from "@/types/auth-types.ts";
+import {type AuthType} from "@/types/auth-types.ts";
 
 type Props = {
   readonly children: ReactNode, // 傳入的組件

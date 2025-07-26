@@ -1,5 +1,5 @@
-import {UserInfo} from "./user-types.ts";
-import {Dispatch, SetStateAction} from "react";
+import type {UserInfo} from "./user-types.ts";
+import type {Dispatch, SetStateAction} from "react";
 
 /*權限相關類型*/
 

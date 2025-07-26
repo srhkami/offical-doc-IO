@@ -1,4 +1,4 @@
-import {AUTH_CHECK, AuthType} from "@/types/auth-types.ts"
+import {AUTH_CHECK, type AuthType} from "@/types/auth-types.ts"
 
 /**
  * 驗證是否擁有特定權限
