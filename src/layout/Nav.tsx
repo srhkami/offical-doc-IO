@@ -2,6 +2,7 @@ import BtnThemeToggle from "./BtnThemeToggle";
 import {MenuUser, ModalLogin} from "@/features";
 import {useContext} from "react";
 import {AuthContext} from "@/auth";
+import {Link} from "react-router";
 
 export default function Nav() {
 
@@ -27,7 +28,9 @@ export default function Nav() {
         </div>
       </div>
       <div className="navbar-center">
-        <a className="btn btn-ghost text-xl">電子收送文系統</a>
+        <Link to='/' className='btn btn-ghost text-xl'>
+          電子收送文系統
+        </Link>
       </div>
       <div className="navbar-end">
        <BtnThemeToggle/>

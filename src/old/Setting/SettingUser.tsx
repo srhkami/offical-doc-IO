@@ -7,7 +7,7 @@ import ModalAddUser from "./ModalAddUser.tsx";
 import ModalEditUser from "./ModalEditUser.tsx";
 import {UserDetail} from "../../utils/types.ts";
 import {useAxios} from "../../utils/useAxios.ts";
-import CardUser from "@/old/tools/CardUser.tsx";
+import UserCard from "@/features/General/UserCard.tsx";
 
 export default function SettingUser() {
 
@@ -33,7 +33,7 @@ export default function SettingUser() {
   const cardList = data.map(obj => {
     return (
       <Col xs={12} key={obj.id} className='my-1'>
-        <CardUser
+        <UserCard
           obj={obj}
           header={<ModalEditUser obj={obj} setIsLoading={setIsLoading}/>}
         />

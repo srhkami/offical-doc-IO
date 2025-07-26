@@ -1,8 +1,8 @@
 import React, {Dispatch, SetStateAction} from "react";
 import {MDBTable, MDBTableHead, MDBTableBody} from "mdb-react-ui-kit";
 import {DocInDetail, UserDetail} from "../../../utils/types.ts";
-import ModalAssign from "../modals/ModalAssign.tsx";
-import ModalRemove from "../modals/ModalRemove.tsx";
+import ModalAssign from "@/features/DocIn/modals/ModalAssign.tsx";
+import ModalRemove from "@/features/DocIn/modals/ModalRemove.tsx";
 import {Card, Col} from "react-bootstrap";
 
 type Props = {
