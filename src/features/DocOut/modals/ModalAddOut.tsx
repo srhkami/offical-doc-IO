@@ -1,21 +1,26 @@
 import {type Dispatch, type SetStateAction} from 'react';
-import {FaPlusCircle} from "react-icons/fa";
-import {BsFillSendPlusFill} from "react-icons/bs";
-import OptionsGroup from "@/old/tools/OptionsGroup.tsx";
-import OptionsUser from "@/old/tools/OptionsUser.tsx";
 import {useAxios, useModal} from '@/hooks';
 import type {DocOutDetail} from '@/types/doc-types';
 import {type SubmitHandler, useForm} from 'react-hook-form';
 import {ROOT_IP} from "@/utils/info.ts";
 import {showToast} from "@/utils/handleToast.ts";
 import {getDate} from '@/utils/getDate';
-import {Button, Col, FormInputCol, Modal, ModalBody, ModalHeader, Row} from "@/component";
+import {BottomButton, Button, Col, FormInputCol, Modal, ModalBody, ModalHeader, ModalTitle, Row} from "@/component";
+import {IoMdAdd} from "react-icons/io";
+import {OptionsGroup, OptionsUser} from "@/features";
+import {showFormError} from "@/utils/handleFormErrors.ts";
+
 
 type Props = {
-  readonly setReLoad: Dispatch<SetStateAction<boolean>>,
+  readonly setReload: Dispatch<SetStateAction<boolean>>,
 }
 
-export default function ModalAddOut({setReLoad}: Props) {
+/**
+ * 用來新增送文的對話框
+ * @param setReload
+ * @constructor
+ */
+export default function ModalAddOut({setReload}: Props) {
 
   const api = useAxios();
   const {isShow, onShow, onHide} = useModal();
@@ -24,48 +29,48 @@ export default function ModalAddOut({setReLoad}: Props) {
     register,
     handleSubmit,
     setValue,
+    setError,
     formState: {errors},
   }
     = useForm<DocOutDetail>();
 
-  const onAdd = async () => {
+  const getNumber = async () => {
     const res = await api({
-      method: 'get',
+      method: 'GET',
       url: ROOT_IP + '/doc/get_number/',
       params: {ym: getDate().ym},
     })
-    return res.data
+    return Number(res.data)
   }
 
-  const onSubmit: SubmitHandler<DocOutDetail> = (formData) => {
+  const onSubmit: SubmitHandler<DocOutDetail> = async (formData) => {
     // 取得送文號
-    const SendNumber = onAdd();
-    formData.number = Number(SendNumber)
+    formData.number = await getNumber();
     showToast(
       api({
-        method: 'post',
+        method: 'POST',
         url: ROOT_IP + '/doc/out/',
         data: formData,
       }), {success: '新增成功'}
     )
       .then(() => {
-        setReLoad(prev => !prev);
+        setReload(prev => !prev);
         setValue('username', '');
         setValue('title', '');
       })
-      .catch(err => console.log(err))
+      .catch(err => showFormError(err, setError))
   }
 
   return (
     <>
-      <Button color='primary' size='sm' onClick={onShow}>
-        <FaPlusCircle className='me-1 my-auto'/>
-        新增
-      </Button>
+      <BottomButton color='primary' style='soft' onClick={onShow}>
+        <IoMdAdd className='text-xl'/>
+      </BottomButton>
       <Modal isShow={isShow} onHide={onHide} backdrop={false} closeButton>
         <ModalHeader divider>
-          <BsFillSendPlusFill className='i-12 me-2' color='#3B71CA'/>
-          <h4 className='fw-bolder text-primary my-auto'>新增送文</h4>
+          <ModalTitle>
+            新增送文
+          </ModalTitle>
         </ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -78,17 +83,6 @@ export default function ModalAddOut({setReLoad}: Props) {
                   {...register('reportDate', {required: '請填寫此欄位'})}
                 />
               </FormInputCol>
-
-              <FormInputCol xs={6} label='送文號' error={errors.number?.message}>
-                <input
-                  className='input input-sm w-full'
-                  type='text'
-                  placeholder='儲存後會自動取號'
-                  readOnly
-                  {...register('number')}
-                />
-              </FormInputCol>
-
               <FormInputCol xs={6} label='送文號' error={errors.number?.message}>
                 <input
                   className='input input-sm w-full'
@@ -120,7 +114,7 @@ export default function ModalAddOut({setReLoad}: Props) {
                 />
               </FormInputCol>
             </Row>
-            <Col xs={12}>
+            <Col xs={12} className='mt-6'>
               <Button type='submit' color='success' size='sm' shape='block'>
                 新增
               </Button>

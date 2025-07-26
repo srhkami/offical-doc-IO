@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Row, Col} from "react-bootstrap";
 import {MDBBtn} from "mdb-react-ui-kit";
 import {IoArrowBackOutline} from "react-icons/io5";
-import ModalSelectDate from "@/old/tools/ModalSelectDate.tsx";
+import ModalSelectDate from "@/features/General/ModalSelectDate.tsx";
 import {useLocation, useParams} from "react-router";
 import {ROOT_IP} from "../../../utils/info.tsx";
 import {useAxios} from "../../../utils/useAxios.ts";

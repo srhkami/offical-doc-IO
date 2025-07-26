@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
-import {ROOT_IP} from "../../utils/info.tsx";
-import {useAxios} from "../../utils/useAxios.ts";
-import {GroupDetail} from "../../utils/types.ts";
+import {useAxios} from "@/hooks";
+import type {GroupDetail} from "@/types/doc-types.ts";
+import {ROOT_IP} from "@/utils/info.ts";
 
 export default function OptionsGroup() {
 

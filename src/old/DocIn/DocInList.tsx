@@ -12,7 +12,7 @@ import InManageTable, {InManageListMobile} from "./InManage/InManageTable.tsx";
 import HtmlTitle from "../../layout/HtmlTitle.tsx";
 import {getQueryParams} from "../../utils/url.ts";
 import toast from "react-hot-toast";
-import ModalSelectDate from "@/old/tools/ModalSelectDate.tsx";
+import ModalSelectDate from "@/features/General/ModalSelectDate.tsx";
 import {IoArrowBackOutline} from "react-icons/io5";
 import InHistoryTable from "./InHistory/InHistoryTable.tsx";
 

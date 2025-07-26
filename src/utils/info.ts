@@ -3,8 +3,8 @@
 export const appVer = '1140430'
 
 // 根IP
-export const ROOT_IP = 'https://api.pigeonhand.tw';  // 正式環境
-// export const ROOT_IP = 'http://localhost:8000'; // 開發環境
+// export const ROOT_IP = 'https://api.pigeonhand.tw';  // 正式環境
+export const ROOT_IP = 'http://localhost:8000'; // 開發環境
 
 
 // 儲存靜態媒體IP，不須以「/」開頭

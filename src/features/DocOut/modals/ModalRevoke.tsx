@@ -1,65 +1,72 @@
-import React, {Dispatch, SetStateAction, useState} from 'react';
-import {Alert, Modal} from "react-bootstrap";
-import {MDBBtn} from "mdb-react-ui-kit";
-import {ROOT_IP} from "../../../utils/info.ts";
-import {useAxios} from "../../../utils/useAxios.ts";
+import {type Dispatch, type SetStateAction} from 'react';
 import {MdDeleteForever} from "react-icons/md";
-import toast from "react-hot-toast";
-import {handleError} from "../../../utils/handleError.ts";
+import {useAxios, useModal} from "@/hooks";
+import {Button, Modal, ModalBody, ModalTitle} from "@/component";
+import {ROOT_IP} from "@/utils/info.ts";
+import {showToast} from "@/utils/handleToast.ts";
 
 type Props = {
   readonly id: number,
-  readonly setIsLoading: Dispatch<SetStateAction<boolean>>,
+  readonly setReload: Dispatch<SetStateAction<boolean>>,
 }
 
-export default function ModalRevoke({id, setIsLoading}: Props) {
-  // 用來撤銷送文
+/**
+ * 用來撤銷送文的對話框
+ * @param id
+ * @param setReload
+ * @constructor
+ */
+export default function ModalRevoke({id, setReload}: Props) {
 
   const api = useAxios();
+  const {isShow, onShow, onHide} = useModal();
 
-  const [modalShow, setModalShow] = useState(false);
-  const handleModalShow = () => setModalShow(true);
-  const handleModalClose = () => setModalShow(false);
-
-  function handleRevoke() {
-    toast.loading('處理中，請稍候...')
-    setIsLoading(true);
-    api({
-      method: 'PATCH',
-      url: ROOT_IP + '/doc/out/' + id + '/',
-      data: {
-        status: 2,
-      },
-    }).then(() => {
-      toast.dismiss();
-      toast.success('撤銷成功')
-      setIsLoading(false);
-      setModalShow(false);
-    }).catch(err => {
-      setIsLoading(false);
-      handleError(err);
-    })
+  function onRevoke() {
+    showToast(
+      api({
+        method: 'PATCH',
+        url: ROOT_IP + '/doc/out/' + id + '/',
+        data: {
+          status: 2,
+        },
+      })
+    )
+      .then(() => {
+        setReload(prev => !prev);
+        onHide()
+      })
+      .catch(err => console.log(err))
   }
 
   return (
     <>
-      <MDBBtn color='danger' outline size='sm' className='d-flex ms-1' onClick={handleModalShow}>
-        <MdDeleteForever className='i-15 my-auto'/>
-      </MDBBtn>
-      {modalShow &&
-        <Modal show={modalShow} onHide={handleModalClose}>
-          <Alert variant='info' className='m-0'>
-            <Alert.Heading>是否撤銷此公文？</Alert.Heading>
-            <p>若此公文無法送出，請點此撤銷。
-              <br/>若想重新送出原公文，請重新取號</p>
-            <hr/>
-            <div className='d-flex justify-content-end'>
-              <MDBBtn color="danger" className='me-2' onClick={handleRevoke}>確定撤銷</MDBBtn>
-              <MDBBtn color="secondary" onClick={handleModalClose}>取消</MDBBtn>
+      <Button color='error' shape='circle' style='ghost' size='sm' onClick={onShow}>
+        <MdDeleteForever className='text-lg'/>
+      </Button>
+      <Modal isShow={isShow} onHide={onHide} closeButton className='border-2 border-error'>
+        <ModalBody>
+          <ModalTitle>
+            是否撤銷此公文？
+          </ModalTitle>
+          <div className='my-4'>
+            若此公文無法送出，請點此撤銷。
+            <br/>
+            若想重新送出原公文，請重新取號
+          </div>
+          <div className='flex justify-between gap-2'>
+            <div className='w-full'>
+              <Button size='sm' color='error' shape='block' onClick={onRevoke}>
+                確定撤銷
+              </Button>
             </div>
-          </Alert>
-        </Modal>
-      }
+            <div className='w-full'>
+              <Button size='sm' color='secondary' shape='block' onClick={onHide}>
+                取消
+              </Button>
+            </div>
+          </div>
+        </ModalBody>
+      </Modal>
     </>
   )
 }

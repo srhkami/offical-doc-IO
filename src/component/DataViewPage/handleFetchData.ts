@@ -1,6 +1,6 @@
-import {Dispatch, SetStateAction} from "react";
+import type {Dispatch, SetStateAction} from "react";
 import isEqual from "fast-deep-equal";
-import {ApiResData} from "@/types/api-types.ts";
+import type {ApiResData} from "@/types/api-types.ts";
 import {showToast} from "@/utils/handleToast.ts";
 
 type TWithId = { id: number };
