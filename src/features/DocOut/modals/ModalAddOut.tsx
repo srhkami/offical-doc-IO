@@ -77,7 +77,7 @@ export default function ModalAddOut({setReload}: Props) {
             <Row>
               <FormInputCol xs={6} label='陳報日期' error={errors.reportDate?.message}>
                 <input
-                  className='input input-sm w-full'
+                  className='input w-full'
                   type='date'
                   defaultValue={getDate().today}
                   {...register('reportDate', {required: '請填寫此欄位'})}
@@ -85,7 +85,7 @@ export default function ModalAddOut({setReload}: Props) {
               </FormInputCol>
               <FormInputCol xs={6} label='送文號' error={errors.number?.message}>
                 <input
-                  className='input input-sm w-full'
+                  className='input w-full'
                   type='text'
                   placeholder='儲存後會自動取號'
                   readOnly
@@ -93,21 +93,21 @@ export default function ModalAddOut({setReload}: Props) {
                 />
               </FormInputCol>
               <FormInputCol xs={6} label='組別' error={errors.groupName?.message}>
-                <select className='select select-sm w-full'
+                <select className='select w-full'
                         {...register('groupName', {required: '請選擇此欄位'})}>
                   {/*這個選項應該要動態刷新才對*/}
                   <OptionsGroup/>
                 </select>
               </FormInputCol>
               <FormInputCol xs={6} label='承辦人' error={errors.groupName?.message}>
-                <select className='select select-sm w-full'
+                <select className='select w-full'
                         {...register('username', {required: '請選擇此欄位'})}>
                   <OptionsUser/>
                 </select>
               </FormInputCol>
               <FormInputCol xs={12} label='主旨' error={errors.number?.message}>
                 <input
-                  className='input input-sm w-full'
+                  className='input w-full'
                   type='text'
                   placeholder='請輸入陳報主旨'
                   {...register('title', {required: '請填寫此欄位'})}
@@ -115,7 +115,7 @@ export default function ModalAddOut({setReload}: Props) {
               </FormInputCol>
             </Row>
             <Col xs={12} className='mt-6'>
-              <Button type='submit' color='success' size='sm' shape='block'>
+              <Button type='submit' color='success' shape='block'>
                 新增
               </Button>
             </Col>

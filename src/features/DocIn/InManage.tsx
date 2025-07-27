@@ -12,6 +12,7 @@ import ModalRead from "@/features/DocIn/modals/ModalRead.tsx";
 import {FaFileCircleExclamation} from "react-icons/fa6";
 import ModalAssign from "@/features/DocIn/modals/ModalAssign.tsx";
 import {fetchData} from "@/component/DataViewPage/handleFetchData.ts";
+import {TbMailDown} from "react-icons/tb";
 
 export default function InManage() {
 
@@ -23,7 +24,7 @@ export default function InManage() {
   const [data, setData]
     = useState<Array<DocInDetail>>([]); //從API取得的資料，初始值為空
 
-  const users = useCacheApi<ApiResData<Array<UserDetail>>>(ROOT_IP + '/doc/users/')
+  const users = useCacheApi<ApiResData<Array<UserDetail>>>(ROOT_IP + '/doc/users/?ordering=area')
 
   // const [userData, setUserData] = useState<Array<UserDetail>>([]);//從API取得的使用者資料，初始值為空
   const [reload, setReload] = useState(false); // 是否為載入中的狀態
@@ -61,13 +62,12 @@ export default function InManage() {
           <div className="list-col-grow">
             <div className='flex items-center'>
               <span className='font-bold text-primary mr-2'>{doc.number}</span>
-              <div className='text-secondary'>{doc.groupName}</div>
+              <div>{doc.groupName}</div>
             </div>
-            <div className="text-xs uppercase opacity-60">{doc.title}</div>
+            <div className="text-sm opacity-50">{doc.title}</div>
           </div>
           <ModalAssign id={doc.id} userData={users.data?.results ?? []}
                        setReload={setReload} username={doc.username}/>
-          {/*<ModalRemove id={doc.id} setReload={setReload}/>*/}
         </li>
       )
     }
@@ -79,8 +79,8 @@ export default function InManage() {
       <HtmlTitle title='待批公文'/>
       <DataViewPage
         header={
-          <h4 className="text-2xl font-bold">
-            待批公文
+          <h4 className="text-2xl font-bold flex items-center">
+            <TbMailDown className='mr-4'/>待批公文
           </h4>
         }
         placeholder='搜尋標題/組別/承辦人'

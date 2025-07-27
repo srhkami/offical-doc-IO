@@ -12,6 +12,7 @@ import {ModalSendOut} from "@/features/DocOut/modals/ModalSendOut.tsx";
 import ModalAddOut from "@/features/DocOut/modals/ModalAddOut.tsx";
 import {FaFileCircleExclamation} from "react-icons/fa6";
 import ModalRevoke from "@/features/DocOut/modals/ModalRevoke.tsx";
+import {BsFillSendArrowUpFill} from "react-icons/bs";
 
 export default function OutManage() {
 
@@ -55,9 +56,9 @@ export default function OutManage() {
           <div className="list-col-grow">
             <div className='flex items-center'>
               <span className='font-bold text-primary mr-2'>{doc.number}</span>
-              <div className='text-secondary'>{doc.username}（{doc.groupName}）</div>
+              <div>{doc.username}（{doc.groupName}）</div>
             </div>
-            <div className="text-xs uppercase opacity-60">{doc.title}</div>
+            <div className="text-sm opacity-50">{doc.title}</div>
           </div>
           <ModalRevoke id={doc.id} setReload={setReload}/>
         </li>
@@ -70,8 +71,8 @@ export default function OutManage() {
       <HtmlTitle title='待送公文'/>
       <DataViewPage
         header={
-          <h4 className="text-2xl font-bold">
-            待送公文
+          <h4 className="text-2xl font-bold flex items-center">
+            <BsFillSendArrowUpFill className='mr-4'/>待送公文
           </h4>
         }
         placeholder='搜尋標題/組別/承辦人'

@@ -1,4 +1,4 @@
-export function getQueryParams(url) {
+export function getQueryParams(url:string) {
   // 解析網頁params
   // 前置動作：
   // const location = useLocation();

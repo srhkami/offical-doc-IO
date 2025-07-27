@@ -62,9 +62,9 @@ export default function InHistory() {
           <div className="list-col-grow">
             <div className='flex items-center'>
               <span className='font-bold text-primary mr-2'>{doc.number}</span>
-              <div className='text-secondary'>{doc.groupName}（{doc.username}）</div>
+              <div>{doc.groupName}（{doc.username}）</div>
             </div>
-            <div className="text-xs uppercase opacity-60">{doc.title}</div>
+            <div className="text-sm opacity-50">{doc.title}</div>
           </div>
           <ModalInDetail doc={doc}/>
         </li>

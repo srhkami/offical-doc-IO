@@ -6,7 +6,7 @@ import {BottomMainButton, Button, Col, FormInputCol, Modal, ModalBody, ModalHead
 import {getDate} from "@/utils/getDate.ts";
 
 type Props = {
-  mode: 'out' | 'in',
+  readonly mode: 'out' | 'in',
 }
 
 /**
@@ -50,13 +50,13 @@ export default function ModalSelectDate({mode}: Props) {
           <Row>
             <FormInputCol xs={9} label='請選擇收送文日期' error={undefined}>
               <input
-                className='input input-sm w-full'
+                className='input w-full'
                 type='date'
                 {...register('sendDate', {required: true})}
               />
             </FormInputCol>
             <Col xs={3} className='flex items-end justify-end'>
-              <Button size='sm' color='primary' onClick={handleSubmit(onSubmit)}>
+              <Button color='primary' onClick={handleSubmit(onSubmit)}>
                 查詢
               </Button>
             </Col>

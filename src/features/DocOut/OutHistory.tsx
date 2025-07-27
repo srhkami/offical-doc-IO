@@ -65,9 +65,9 @@ export default function OutManage() {
           <div className="list-col-grow">
             <div className='flex items-center'>
               <span className='font-bold text-primary mr-2'>{doc.number}</span>
-              <div className='text-secondary'>{doc.username}（{doc.groupName}）</div>
+              <div>{doc.username}（{doc.groupName}）</div>
             </div>
-            <div className="text-xs uppercase opacity-60">{doc.title}</div>
+            <div className="text-sm opacity-50">{doc.title}</div>
           </div>
           <ModalOutDetail doc={doc}/>
         </li>

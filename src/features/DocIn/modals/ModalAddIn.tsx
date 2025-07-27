@@ -60,13 +60,13 @@ export default function ModalAddIn({setReload}: Props) {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Row>
               <FormInputCol xs={6} label='組別' error={errors.groupName?.message}>
-                <select className='select select-sm w-full' {...register('groupName', {required: '請選擇此欄位'})}>
+                <select className='select w-full' {...register('groupName', {required: '請選擇此欄位'})}>
                   <OptionsGroup/>
                 </select>
               </FormInputCol>
               <FormInputCol xs={6} label='發文字號' error={errors.number?.message}>
                 <input
-                  className='input input-sm w-full'
+                  className='input w-full'
                   type='text'
                   placeholder='填末五碼，或公文種類'
                   {...register('number', {required: '請填寫此欄位', maxLength: {value: 16, message: '上限16個字'}})}
@@ -74,14 +74,14 @@ export default function ModalAddIn({setReload}: Props) {
               </FormInputCol>
               <FormInputCol xs={12} label='主旨' error={errors.title?.message}>
                 <input
-                  className='input input-sm w-full'
+                  className='input w-full'
                   type='text'
                   placeholder='請輸入公文主旨'
                   {...register('title', {required: '請填寫此欄位'})}
                 />
               </FormInputCol>
               <Col xs={12} className='mt-6'>
-                <Button type='submit' color='success' size='sm' shape='block'>
+                <Button type='submit' color='success' shape='block'>
                   新增
                 </Button>
               </Col>

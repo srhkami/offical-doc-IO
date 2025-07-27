@@ -1,5 +1,5 @@
-import {SubmitHandler, useForm} from "react-hook-form";
-import {ApiKeywordForm} from "@/types/api-types.ts";
+import {type SubmitHandler, useForm} from "react-hook-form";
+import type {ApiKeywordForm} from "@/types/api-types.ts";
 import {useNavigate, useParams} from "react-router";
 
 type Props = {
@@ -25,7 +25,7 @@ export default function KeywordForm({searchPage, placeholder = '搜尋關鍵字'
   return (
     <form onSubmit={handleSubmit(handleSearch)}>
       <input type="text" placeholder={placeholder} className="input input-sm max-w-36"
-             {...register('keyword',{required: true})}/>
+             {...register('keyword', {required: true})}/>
     </form>
   )
 }

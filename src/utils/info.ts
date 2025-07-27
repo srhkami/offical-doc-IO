@@ -1,10 +1,10 @@
 // 程式功能：用以儲存往網頁訊息的靜態資料
 
-export const appVer = '1140430'
+export const APP_VERSION = '1140728'
 
 // 根IP
-// export const ROOT_IP = 'https://api.pigeonhand.tw';  // 正式環境
-export const ROOT_IP = 'http://localhost:8000'; // 開發環境
+export const ROOT_IP = 'https://api.pigeonhand.tw';  // 正式環境
+// export const ROOT_IP = 'http://localhost:8000'; // 開發環境
 
 
 // 儲存靜態媒體IP，不須以「/」開頭

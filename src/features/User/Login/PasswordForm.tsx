@@ -10,7 +10,8 @@ import {showFormError} from "@/utils/handleFormErrors.ts";
 export default function PasswordForm(){
 
   const {setIsAuthenticated} = useContext(AuthContext);
-  const {register, handleSubmit, setError, formState: {errors}} = useForm<UserLoginForm>();
+  const {register, handleSubmit, setError, formState: {errors}}
+    = useForm<UserLoginForm>({defaultValues:{email:'7523134@m2.cypd.gov.tw'}});
 
   const onSubmit: SubmitHandler<UserLoginForm> = (formData) => {
     showToast(

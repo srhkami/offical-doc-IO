@@ -82,7 +82,7 @@ export default function ModalAssign({id, userData, setReload, username}: Props) 
 
   return (
     <>
-      <Button size='sm' style='outline' color={username ? 'success' : 'warning'}
+      <Button size='sm' style='outline' color={username ? 'success' : 'error'}
               onClick={onShow}>
         {username ? <TbCopyCheckFilled className='i-12 me-1 my-auto'/> : <TbCopy className='i-12 me-1 my-auto'/>}
         {username || '待指派'}

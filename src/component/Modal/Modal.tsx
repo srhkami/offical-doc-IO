@@ -1,4 +1,4 @@
-import {HTMLAttributes, type ReactNode} from "react";
+import type {HTMLAttributes, ReactNode} from "react";
 import {twMerge} from "tailwind-merge";
 import clsx from "clsx";
 import {Button} from "@/component";

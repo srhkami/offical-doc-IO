@@ -1,4 +1,4 @@
-import {HTMLAttributes} from "react";
+import type {HTMLAttributes} from "react";
 import {twMerge} from "tailwind-merge";
 
 export default function CollapseTitle({className, children}: HTMLAttributes<HTMLDivElement>) {

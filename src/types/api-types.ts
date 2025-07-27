@@ -36,7 +36,7 @@ export type WebPushForm = {
   payload: {
     title: string,
     body: string,
-    icon: '/icons/Logo192.png',
+    icon: '/icons/Logo_PH.png',
     url:string,
   }
 }
