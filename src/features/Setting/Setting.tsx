@@ -1,7 +1,7 @@
 import HtmlTitle from "../../layout/HtmlTitle.tsx";
 import {Col, Collapse, CollapseContent, CollapseTitle, Row} from "@/component";
-import UserEdit from "@/features/Setting/UserEdit.tsx";
-import GroupEdit from "@/features/Setting/GroupEdit.tsx";
+import UserManage from "@/features/Setting/UserManage.tsx";
+import GroupManage from "@/features/Setting/GroupManage.tsx";
 
 export default function Setting() {
   return (
@@ -14,7 +14,7 @@ export default function Setting() {
             人員設定
           </CollapseTitle>
           <CollapseContent>
-            <UserEdit/>
+            <UserManage/>
           </CollapseContent>
         </Collapse>
           <Collapse icon='plus' className='bg-base-100 my-2'>
@@ -22,7 +22,7 @@ export default function Setting() {
               組別設定
             </CollapseTitle>
             <CollapseContent>
-              <GroupEdit/>
+              <GroupManage/>
             </CollapseContent>
           </Collapse>
         </Col>

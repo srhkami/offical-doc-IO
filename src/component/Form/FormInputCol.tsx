@@ -1,5 +1,5 @@
 import Col from "../Row/Col.tsx";
-import {HTMLAttributes, ReactNode} from "react";
+import type {HTMLAttributes, ReactNode} from "react";
 import {twMerge} from "tailwind-merge";
 
 type Props = {

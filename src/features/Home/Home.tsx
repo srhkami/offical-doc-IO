@@ -13,7 +13,7 @@ export default function Home() {
       <Row>
         <Col xs={12} md={6} className='px-2 mt-4'>
           <Link to='/out'>
-            <div className='card bg-base-100 border border-base-300 hover:border-3'>
+            <div className='card bg-base-100 border-2 border-base-300 hover:border-primary'>
               <div className='card-body'>
                 <div className='text-3xl font-bold flex justify-center'>
                   <BsFillSendArrowUpFill className='mr-4'/>送出公文
@@ -27,7 +27,7 @@ export default function Home() {
         </Col>
         <Col xs={12} md={6} className='px-2 mt-4'>
           <Link to='/in' className="card mb-3 rounded-3 shadow-lg" style={{textDecoration: 'none'}}>
-            <div className='card bg-base-100 border border-base-300 hover:border-3'>
+            <div className='card bg-base-100 border-2 border-base-300 hover:border-primary'>
               <div className='card-body'>
                 <div className='text-3xl font-bold flex justify-center'>
                   <TbMailDown className='mr-4'/>收受公文
@@ -41,7 +41,7 @@ export default function Home() {
         </Col>
         <Col xs={12} md={6} className='px-2'>
           <Link to='/in' className="card mb-3 rounded-3 shadow-lg" style={{textDecoration: 'none'}}>
-            <div className='card bg-base-100 border border-base-300 hover:border-3'>
+            <div className='card bg-base-100 border-2 border-base-300 hover:border-primary'>
               <div className='card-body'>
                 <div className='text-3xl font-bold flex justify-center'>
                   <FiFilePlus className='mr-4'/>新增陳報單
@@ -55,7 +55,7 @@ export default function Home() {
         </Col>
         <Col xs={12} md={6} className='px-2'>
         <Link to='/setting' className="card mb-3 rounded-3 shadow-lg" style={{textDecoration: 'none'}}>
-          <div className='card bg-base-100 border border-base-300 hover:border-3'>
+          <div className='card bg-base-100 border-2 border-base-300 hover:border-primary'>
             <div className='card-body'>
               <div className='text-3xl font-bold flex justify-center'>
                 <IoSettingsSharp className='mr-4'/>系統設定
