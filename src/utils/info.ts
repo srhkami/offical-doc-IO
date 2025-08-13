@@ -1,6 +1,6 @@
 // 程式功能：用以儲存往網頁訊息的靜態資料
 
-export const APP_VERSION = '1140728'
+export const APP_VERSION = '1140813'
 
 // 根IP
 export const ROOT_IP = 'https://api.pigeonhand.tw';  // 正式環境

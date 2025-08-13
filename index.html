@@ -12,6 +12,12 @@
 <body class="font-semibold">
 <div id="root" class="bg-base-200"></div>
 <div id="modal-root"></div>
+<script>
+  if (location.hostname === 'minxing.trafficpigeon.com') {
+    const newUrl = `https://mx.pigeonhand.tw${location.pathname}${location.search}${location.hash}`
+    location.replace(newUrl)
+  }
+</script>
 <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
