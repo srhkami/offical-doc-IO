@@ -2,24 +2,60 @@ import axios from "axios";
 import {USER_API} from "@/utils/info.ts";
 import type {EmailLoginForm, UserLoginForm, UserSignUpNormalForm} from "@/types/user-types.ts";
 
+// Token的類別
+type Tokens = { access: string; refresh: string };
+
+type LoginResponse = {
+  access: string;
+  refresh: string;
+};
+
+// localStorage 的 key
+export const LS_KEY = "ph_tokens";
+
+// 載入token
+export const loadTokens = (): Tokens | null => {
+  try {
+    return JSON.parse(localStorage.getItem(LS_KEY) || "null");
+  } catch {
+    return null;
+  }
+};
+
+// 儲存token
+export const saveTokens = (t: Tokens) => localStorage.setItem(LS_KEY, JSON.stringify(t));
+
+// 設定Access Token
+export const setAccess = (access: string) => {
+  const cur = loadTokens();
+  if (!cur) return;
+  saveTokens({...cur, access});
+};
+
+// 清除token
+export const clearTokens = () => localStorage.removeItem(LS_KEY);
+
+// 登入
 export async function handleLogin(formData: UserLoginForm) {
-  return axios({
-    method: 'post',
-    url: USER_API + '/login/',
-    data: formData,
-    withCredentials: true,
-  })
+  const {data} = await axios<LoginResponse>({
+    method: "POST",
+    url: USER_API + "/login/password/",
+    data: formData
+  });
+  saveTokens(data);
 }
 
+// 信箱登入
 export async function handleEmailLogin(formData: EmailLoginForm) {
-  return await axios({
+  const {data} = await axios<LoginResponse>({
     method: 'POST',
     url: USER_API + '/login/email/',
     data: formData,
-    withCredentials: true,
-  })
+  });
+  saveTokens(data);
 }
 
+// 註冊
 export async function handleSignUp(formData: UserSignUpNormalForm) {
   const res = await axios({
     method: 'POST',
@@ -29,11 +65,16 @@ export async function handleSignUp(formData: UserSignUpNormalForm) {
   return res.data.email
 }
 
+// 登出
 export async function handleLogout() {
+  const tokens = loadTokens();
+  clearTokens();
   return axios({
-    method: 'GET',
+    method: 'POST',
     url: USER_API + '/logout/',
-    withCredentials: true,
+    data:{
+      refresh: tokens?.refresh
+    }
   });
 }
 

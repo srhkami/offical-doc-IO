@@ -1,5 +1,7 @@
 // 用來儲存通用的TS類別
 
+import type {UserInfo} from "@/types/user-types.ts";
+
 export type TypeAuthContext = {
   isAuthenticated: boolean,
   setIsAuthenticated: (val: boolean) => void,
@@ -32,17 +34,6 @@ export type ApiResData<T> = {
 export type UserLoginForm = {
   email: string,
   password: string,
-}
-
-
-export type UserInfo = {
-  'id': number,
-  'username': string,
-  'auth': string,
-  'email': string,
-  'accStatus': 0 | 1 | 2 | 3 | 4,
-  'bookmark': string,
-  'name': string,
 }
 
 

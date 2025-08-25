@@ -65,7 +65,7 @@ export default function OutManage() {
           <div className="list-col-grow">
             <div className='flex items-center'>
               <span className='font-bold text-primary mr-2'>{doc.number}</span>
-              <div>{doc.username}（{doc.groupName}）</div>
+              <div>{doc.username}（{doc.sendDate}）</div>
             </div>
             <div className="text-sm opacity-50">{doc.title}</div>
           </div>
@@ -91,7 +91,7 @@ export default function OutManage() {
           <ModalSelectDate mode='out'/>
         }
         bottomButtons={
-          <BottomButton onClick={() => navi('/out')} title='返回'>
+          <BottomButton onClick={() => navi('/out')} label='返回'>
             <IoArrowBackOutline className='text-xl'/>
           </BottomButton>
         }

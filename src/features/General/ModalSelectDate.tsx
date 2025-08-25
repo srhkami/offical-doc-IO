@@ -36,7 +36,7 @@ export default function ModalSelectDate({mode}: Props) {
 
   return (
     <>
-      <BottomMainButton color='info' onClick={onShow}>
+      <BottomMainButton color='info' onClick={onShow} label='列印紀錄'>
         <IoMdPrint className='text-lg'/>
         {/*{mode === 'out'? '列印歷史送文簿' : '列印歷史收文簿'}*/}
       </BottomMainButton>

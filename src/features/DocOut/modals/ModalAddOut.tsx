@@ -63,7 +63,7 @@ export default function ModalAddOut({setReload}: Props) {
 
   return (
     <>
-      <BottomButton color='primary' style='soft' onClick={onShow}>
+      <BottomButton color='primary' style='soft' onClick={onShow} label='新增'>
         <IoMdAdd className='text-xl'/>
       </BottomButton>
       <Modal isShow={isShow} onHide={onHide} backdrop={false} closeButton>

@@ -32,7 +32,7 @@ export default function ModalRead({setReload}: Props) {
 
   return (
     <>
-      <BottomMainButton color='success' title='完成批閱'
+      <BottomMainButton color='success' label='完成批閱'
                         onClick={onShow}>
         <BsSendCheckFill className='text-xl'/>
       </BottomMainButton>

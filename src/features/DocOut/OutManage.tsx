@@ -84,7 +84,7 @@ export default function OutManage() {
         bottomButtons={
           <>
             <ModalAddOut setReload={setReload}/>
-            <BottomButton title='送文紀錄'
+            <BottomButton label='送文紀錄'
                           onClick={() => navi('/out/history/1?ordering=-id')}>
               <MdHistory className='text-xl'/>
             </BottomButton>

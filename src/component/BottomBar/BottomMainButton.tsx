@@ -6,6 +6,7 @@ type Props = {
   color?: "neutral" | "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error",
   style?: "outline" | "dash" | "soft" | "ghost" | "link",
   disabled?: boolean,
+  label?: string,
 }
 
 /**
@@ -15,6 +16,7 @@ type Props = {
  * @param color
  * @param style
  * @param disabled
+ * @param label
  * @param onClick
  * @param type
  * @param className
@@ -23,18 +25,19 @@ type Props = {
  * @constructor
  */
 export default function BottomMainButton({
-                                       color,
-                                       style = 'outline',
-                                       disabled = false,
-                                       onClick,
-                                       type,
-                                       className,
-                                       title,
-                                       children
-                                     }: Props & ButtonHTMLAttributes<HTMLButtonElement>) {
+                                           color,
+                                           style = 'outline',
+                                           disabled = false,
+                                           label = '',
+                                           onClick,
+                                           type,
+                                           className,
+                                           title,
+                                           children
+                                         }: Props & ButtonHTMLAttributes<HTMLButtonElement>) {
 
   const classes = twMerge(
-    'backdrop-blur-xs shadow-md shadow-base-content/30',
+    'backdrop-blur-xs shadow-md shadow-base-content/30 flex-col gap-0',
     className)
 
   return (
@@ -42,6 +45,7 @@ export default function BottomMainButton({
             disabled={disabled} title={title}
             className={classes} onClick={onClick}>
       {children}
+      {label && <span className='text-[8px]'>{label}</span>}
     </Button>
   )
 }

@@ -1,45 +1,96 @@
-import axios from 'axios'
+import axios, {AxiosError, type AxiosInstance, type AxiosRequestConfig, type InternalAxiosRequestConfig} from 'axios'
 import {USER_API} from "@/utils/info.ts";
 import toast from "react-hot-toast";
+import {clearTokens, loadTokens, saveTokens, setAccess} from "@/auth/handleUser.ts";
 
-/* 攔截器：如果token未過期，則直接傳回請求。或先刷新token，然後返回請求。
-*  使用此方法傳出的請求，會自動夾帶Header，且若Token過期，會先進行Token刷新
-*  使用方法同一般Axios
-*/
-export default function useAxios() {
-  const axiosInstance = axios.create({
+let instance: AxiosInstance | null = null;
+let refreshing = false;
+let waiters: Array<(token: string) => void> = [];
+
+// ⚠️ 用原生 axios 呼叫 refresh，避免攔截器遞迴
+async function refreshAccess(): Promise<string> {
+  const t = loadTokens();
+  if (!t?.refresh) throw new Error("NO_REFRESH_TOKEN");
+  const { data } = await axios.post(`${USER_API}/token/refresh/`, { refresh: t.refresh });
+  const newAccess = data.access as string;
+  const newRefresh = data.refresh as string | undefined; // ROTATE_REFRESH_TOKENS=True 時會有
+  if (newRefresh) {
+    // 旋轉後要存回新的 refresh，否則下一次 refresh 會用到「已黑掉」的舊 token
+    saveTokens({ access: newAccess, refresh: newRefresh });
+  } else {
+    // 沒旋轉的設定就只更新 access
+    setAccess(newAccess);
+  }
+  // 喚醒等待中的請求
+  waiters.splice(0).forEach(fn => fn(newAccess));
+  return newAccess;
+}
+
+// 小工具：安全設定 Authorization，因 Axios v1 headers 是 AxiosHeaders 物件
+function setAuthHeader(cfg: InternalAxiosRequestConfig | AxiosRequestConfig, token: string) {
+  // 轉成普通物件後再賦值，避免 .set() 沒有型別
+  const h: Record<string, any> = cfg.headers ? (cfg.headers as any).toJSON?.() ?? cfg.headers : {};
+  h["Authorization"] = `Bearer ${token}`;
+  cfg.headers = h;
+}
+
+export default function useAxios(): AxiosInstance {
+  if (instance) return instance;
+
+  instance = axios.create({
     baseURL: USER_API,
-    withCredentials: true, // ✅ 所有請求自動帶上 cookie
+    withCredentials: false,
+    headers: {Accept: "application/json"},
   });
 
-  axiosInstance.interceptors.request.use(req => {
-    // 不再加入 Authorization header，cookie 會自動處理
-    return req;
+  // 請求攔截：帶上 Bearer
+  instance.interceptors.request.use((cfg) => {
+    const t = loadTokens();
+    if (t?.access) setAuthHeader(cfg, t.access);
+    return cfg;
   });
 
-  axiosInstance.interceptors.response.use(
-    response => response,
-    async error => {
-      if (error.response?.status === 401) {
-        try {
-          // 嘗試使用 cookie 中的 refresh_token 自動刷新
-          await axios.post(
-            USER_API + '/token/refresh/',
-            {},
-            { withCredentials: true }
-          );
+  // 回應攔截：401 → 刷新一次並重送
+  instance.interceptors.response.use(
+    (res) => res,
+    async (error: AxiosError) => {
+      const original = error.config as (InternalAxiosRequestConfig & { _retry?: boolean }) | undefined;
 
-          // 重新送出原本的請求
-          return axiosInstance(error.config);
-        } catch (err) {
-          console.error('無效Token');
-          toast.error('登入逾期，請重新登入')
-          return Promise.reject(err);
+      // 沒有回應（CORS/網路）→ 直接丟出，避免無限循環
+      if (!error.response || !original) throw error;
+
+      const status = error.response.status;
+
+      // 避免對 refresh 本人重試、或重複重試
+      const isRefreshCall = original.url?.includes("/token/refresh/");
+      if (status !== 401 || original._retry || isRefreshCall) throw error;
+
+      original._retry = true;
+
+      try {
+        if (refreshing) {
+          // 等待已在進行的刷新完成
+          const token = await new Promise<string>(resolve => waiters.push(resolve));
+          setAuthHeader(original, token);
+          return instance!(original);
         }
+
+        refreshing = true;
+        const token = await refreshAccess();
+        refreshing = false;
+
+        setAuthHeader(original, token);
+        return instance!(original);
+      } catch (e) {
+        refreshing = false;
+        waiters = []; // 避免殘留
+        clearTokens();
+        toast.error("登入逾期，請重新登入");
+        console.log(e)
+        throw e;
       }
-      return Promise.reject(error);
     }
   );
 
-  return axiosInstance;
+  return instance;
 }

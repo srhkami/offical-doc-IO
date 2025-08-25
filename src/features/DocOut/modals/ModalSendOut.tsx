@@ -44,7 +44,7 @@ export function ModalSendOut({setReload}: Props) {
 
   return (
     <>
-      <BottomMainButton color='success' title='送出公文'
+      <BottomMainButton color='success' label='送出公文'
                         onClick={onShow}>
         <BsSendCheckFill className='text-xl'/>
       </BottomMainButton>

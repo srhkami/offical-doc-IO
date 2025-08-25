@@ -38,7 +38,7 @@ export default function ModalFilter({path, orderList}: Props) {
 
   return (
     <>
-      <BottomButton onClick={onShow} title='篩選與排序'>
+      <BottomButton onClick={onShow} label='篩選' >
         <TbFilterCog className='text-xl'/>
       </BottomButton>
       <Modal isShow={isShow} onHide={onHide} closeButton size='xs'>

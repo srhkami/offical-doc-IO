@@ -55,11 +55,11 @@ export default function InPrint() {
         </div>
       </div>
       <BottomBar mainButton={
-        <BottomMainButton color='success' onClick={handlePrint}>
+        <BottomMainButton color='success' onClick={handlePrint} label='列印'>
           <LuPrinterCheck className='text-xl'/>
         </BottomMainButton>
       }>
-        <BottomButton onClick={() => navi(-1)}>
+        <BottomButton onClick={() => navi(-1)} label='返回'>
           <IoArrowBackOutline className='text-xl'/>
         </BottomButton>
       </BottomBar>

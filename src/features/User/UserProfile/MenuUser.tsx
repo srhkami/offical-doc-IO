@@ -2,21 +2,18 @@ import {useContext} from "react";
 import AuthContext from "../../../auth/AuthContext.tsx";
 import {Dropdown, DropdownContent, DropdownToggle} from "@/component";
 import {showToast} from "@/utils/handleToast.ts";
-import {handleLogout} from "../handleUser.ts";
+import {handleLogout} from "@/auth/handleUser.ts";
 
 export default function MenuUser() {
 
-  const {setIsAuthenticated, userInfo} = useContext(AuthContext)
+  const {setReload, userInfo} = useContext(AuthContext)
 
   const logout = () => {
     showToast(
       handleLogout()
     )
-      .then(() => {
-        setIsAuthenticated(false);
-        // alert('您已登出')
-      })
       .catch((err) => console.log(err))
+      .finally(() => setReload(true))
   }
 
   return (

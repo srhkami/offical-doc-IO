@@ -1,17 +1,24 @@
-import React, {type ReactNode, useState, createContext, useEffect} from "react";
-import axios from 'axios'
+import React, {type ReactNode, useState, createContext, useEffect, type Dispatch, type SetStateAction} from "react";
+import {USER_API} from "@/utils/info.ts";
 import toast from "react-hot-toast";
 import {Link} from "react-router";
-import {Button} from "@/component";
-import {type UserInfo} from "@/types/user-types.ts";
-import {type TypeAuthContext} from "@/types/auth-types.ts";
-import {USER_API} from "@/utils/info.ts";
+import {Button} from "../component";
+import {useAxios} from "@/hooks";
+import {clearTokens, loadTokens} from "@/auth/handleUser.ts";
+import type {UserInfo} from "@/types/user-types.ts";
 
 type Props = {
   children: ReactNode,
 }
 
-const noLoginUser:UserInfo ={
+type TypeAuthContext = {
+  isAuthenticated: boolean,
+  setIsAuthenticated: (val: boolean) => void,
+  userInfo: UserInfo,
+  setReload: Dispatch<SetStateAction<boolean>>,
+}
+
+const noLoginUser: UserInfo = {
   id: 0,
   auth: '00000000',
   email: '',
@@ -34,20 +41,24 @@ export default AuthContext;
 * */
 export const AuthProvider = ({children}: Props) => {
 
+  const api = useAxios();
   const [isAuthenticatedState, setIsAuthenticatedState] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userInfo, setUserInfo] = useState<UserInfo>(noLoginUser);
   const [reload, setReload] = useState<boolean>(false);
 
-  const setIsAuthenticated = (val: boolean) => {
-    if (!val) {
+  const setIsAuthenticated = (value: boolean) => {
+    if (!value) {
+      clearTokens();
       setIsAuthenticatedState(false);
-      setUserInfo(noLoginUser)
+      setUserInfo(noLoginUser);
+      setIsLoading(false);
+      return;
     }
+    // val=true → 重新抓會員
     setIsLoading(true);
-    verifyToken()
-    // setIsAuthenticatedState(val)
-  }
+    verifyToken();
+  };
 
   const handleToast = (expiry_days: number | null) => {
     let tip: Array<string> = []
@@ -82,33 +93,15 @@ export const AuthProvider = ({children}: Props) => {
     ))
   }
 
-  // 刷新Token
-  const refreshToken = () => {
-    axios({
-      method: 'post',
-      url: USER_API + '/token/refresh/',
-      withCredentials: true,
-    })
-      .then(() => {
-        verifyToken();  // 成功後繼續驗證
-      })
-      .catch(err => {
-        console.error(err);
-        setIsLoading(false);
-        setIsAuthenticatedState(false);
-      });
-  }
-
   // 重新驗證Token，並取得資料
   const verifyToken = () => {
-    axios<UserInfo>({
+    api<UserInfo>({
       method: 'post',
       url: USER_API + '/token/verify/',
-      withCredentials: true,
     })
       .then(res => {
         const data = res.data;
-        const expiry_days = data.expiry_days;
+        const expiry_days = data.expiry_days ?? null;
         setUserInfo({
           id: data.id,
           auth: data.auth,
@@ -119,21 +112,35 @@ export const AuthProvider = ({children}: Props) => {
           options: data.options,
           name: data.name,
         });
-        setIsLoading(false);
         setIsAuthenticatedState(true);
         handleToast(expiry_days)
       })
       .catch(err => {
-        console.log(err);
         toast.error('登入逾期');
-        setIsLoading(false);
+        console.log(err)
         setIsAuthenticatedState(false);
+        setUserInfo(noLoginUser);
+        clearTokens();
       })
+      .finally(() => setIsLoading(false))
   }
 
   useEffect(() => {
-    refreshToken();
-  }, [reload])
+    const t = loadTokens();
+    if (t?.access) {
+      verifyToken();
+    } else {
+      setIsAuthenticatedState(false);
+      setIsLoading(false);
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!reload) return;
+    setReload(false);
+    setIsLoading(true);
+    verifyToken();
+  }, [reload]);
 
   // 全局可調用的變數
   const contextData: TypeAuthContext = {

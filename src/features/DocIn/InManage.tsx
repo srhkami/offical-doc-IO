@@ -92,7 +92,7 @@ export default function InManage() {
         bottomButtons={
           <>
             <ModalAddIn setReload={setReload}/>
-            <BottomButton title='收文紀錄'
+            <BottomButton label='收文紀錄'
                           onClick={() => navi('/in/history/1?ordering=-id')}>
               <MdHistory className='text-xl'/>
             </BottomButton>
@@ -103,7 +103,6 @@ export default function InManage() {
           {dataList}
         </ul>
       </DataViewPage>
-
     </>
   )
 }
